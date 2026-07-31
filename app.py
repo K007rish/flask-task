@@ -28,5 +28,14 @@ def success():
 
     session.pop("submitted", None)  # remove flag after first load
     return render_template("success.html")
+@app.route("/submittodoitem", methods=["POST"])
+def submit_todo_item():
+    item_name = request.form['item_Name']
+    item_description = request.form['item_description']
+    if not item_name:
+        error = "Item Name is required."
+        return render_template('todo.html', error=error)
+    collection.insert_one({'item_Name': item_name, 'item_description': item_description})
+    return redirect(url_for('todo'))
 if __name__ == '__main__':
     app.run(debug=True)
