@@ -9,6 +9,9 @@ collection = db["local"]
 @app.route('/')
 def form():
     return render_template('form.html', error=None)
+@app.route("/todo")
+def todo():
+    return render_template("todo.html")
 
 @app.route('/submit', methods=['POST'])
 def submit():
@@ -36,7 +39,7 @@ def submittodoitem():
     if not item_name:
         error = "Item Name is required."
         return render_template('todo.html', error=error)
-    collection.insert_one({'item_Name': item_name, 'item_description': item_description})
+    collection.insert_one({'item_Name': item_name, 'item_description': item_description, 'item_id': str(collection.count_documents({}) + 1), 'item_uuid': str(collection.count_documents({}) + 1), 'item_hash': item_hashcommit,})
     return redirect(url_for('todo'))
 
 if __name__ == '__main__':
