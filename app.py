@@ -14,6 +14,7 @@ def form():
 def submit():
     name = request.form['name']
     email = request.form['email']
+    phone_number = request.form['phone_number']
     if not name or not email:
         error = "Name and Email are required."
         return render_template('form.html', error=error)
